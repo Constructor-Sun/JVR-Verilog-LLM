@@ -23,7 +23,6 @@ This repository introduces an efficient Verilog generation framework designed to
   <b>Table 2:</b> <i>Performance by Training Stage on VE-V2-CC (%)</i>
 </p>
 
-![alt text](image.png)
 <p align="center">
   <img src="pics/image3.png" alt="Framework Architecture" width="85%">
   <br>
