@@ -72,3 +72,12 @@ sudo docker create --runtime=nvidia --gpus all --net=host \
 docker start verl
 docker exec -it verl bash
 ```
+
+## Acknowledgments
+
+This project is built upon the foundational work of several outstanding open-source repositories. We would like to express our sincere gratitude to the authors of the following projects:
+
+* **[VERL](https://github.com/volcengine/verl):** Our training pipeline, particularly the custom DAPO implementation and token-level gradient updates, is heavily based on this highly efficient reinforcement learning framework.
+* **[Qming-CodeV](https://github.com/iprc-dip/CodeV-R1):** We utilized their meticulously curated Verilog RL datasets, which significantly facilitated our supervised fine-tuning and reinforcement learning processes.
+
+We sincerely thank the researchers and developers for their valuable contributions to the open-source community.
