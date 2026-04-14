@@ -64,10 +64,10 @@ sudo docker run -it --runtime=nvidia --gpus all --net=host \
 
 If you prefer to set up the environment manually, please ensure your OS is Ubuntu 22.04 or later.
 
-1. Core Frameworks
+1. **Core Frameworks**
 - `ms-swift` (3.12.3): Required for Supervised Fine-Tuning (SFT). Please refer to the official SWIFT installation guide.
 - `VERL` (0.8.0.dev0): The reinforcement learning pipeline is built on VERL, developed by ByteDance. Please follow the VERL GitHub repository to build and install it from source.
-2. Hardware Accelerators
+2. **Hardware Accelerators**
 To install transformer-engine, explicitly set the cuDNN paths before pip installation:
 ```bash
 SITE_PACKAGES=$(python -c "import site; print(site.getsitepackages()[0])") && echo $SITE_PACKAGES
@@ -75,12 +75,12 @@ CUDNN_PATH=$SITE_PACKAGES/nvidia/cudnn
 CPLUS_INCLUDE_PATH=$SITE_PACKAGES/nvidia/cudnn/include 
 pip install git+[https://github.com/NVIDIA/TransformerEngine.git@stable](https://github.com/NVIDIA/TransformerEngine.git@stable)
 ```
-To install flash_attn from source, you can accelerate the build process by increasing the number of parallel jobs:
+To install `flash_attn` from source, you can accelerate the build process by increasing the number of parallel jobs:
 ```bash
 MAX_JOBS=64 python -m pip -v install flash-attn --no-build-isolation
 ```
 ⚠️ Warning: Compiling flash-attn with MAX_JOBS=64 is highly resource-intensive and may consume up to 500GB of RAM. Please scale down MAX_JOBS (e.g., to 8 or 16) depending on available memory.
-3. Troubleshooting: GLIBC Compatibility
+3. **Troubleshooting**:
 If constrained to Ubuntu 20.04, there might be an error during compilation: a version 'GLIBC_2.32' not found. To resolve this, there's a need to manually upgrade glibc. Please refer to these community solutions: [Flash-Attention Issue](https://github.com/Dao-AILab/flash-attention/issues/1762) or [Modular Issue](https://github.com/modular/modular/issues/3684#issuecomment-2480409734).
 
 ## Acknowledgments
