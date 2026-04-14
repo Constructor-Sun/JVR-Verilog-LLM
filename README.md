@@ -46,32 +46,42 @@ bash scripts/infer_switch.sh
 bash scripts/infer_qwen.sh
 ```
 
-## Requirements
+## Requirements & Installation
 
-For SFT, this project requires ms-swift 3.12.3. Please follow the github repository to install it: https://swift.readthedocs.io/en/latest/GetStarted/SWIFT-installation.html
+### Method 1: Using Official Docker (Highly Recommended)
+To bypass potential environment conflicts (e.g., GLIBC version mismatches), we strongly recommend using the official `VERL` Docker image:
 
-This project requires VERL (0.8.0.dev0), a RL framework developed by bitdance. Since it cannot be installed simply via pip, please follow the github repository to install it: https://github.com/volcengine/verl
-
-For Ubuntu 20.04, there might exists some compatibility issues, e.g., version `GLIBC_2.32` not found. In this case, please use Ubuntu 22.04 or see the following link to upgrade glibc: https://github.com/Dao-AILab/flash-attention/issues/1762, https://github.com/modular/modular/issues/3684#issuecomment-2480409734.
-
-To install transformer-engine: SITE_PACKAGES=$(python -c "import site; print(site.getsitepackages()[0])") && echo $SITE_PACKAGES && \
-CUDNN_PATH=$SITE_PACKAGES/nvidia/cudnn CPLUS_INCLUDE_PATH=$SITE_PACKAGES/nvidia/cudnn/include \
-pip install git+https://github.com/NVIDIA/TransformerEngine.git@stable
-
-To install flash_attn, use this command to save time: MAX_JOBS=64 python -m pip -v install flash-attn --no-build-isolation. This will cost about 500GB memory.
-
-Or you can use official docker:
-
-```docker
-sudo docker create --runtime=nvidia --gpus all --net=host \
+```bash
+sudo docker run -it --runtime=nvidia --gpus all --net=host \
     --shm-size="20g" \
     --cap-add=SYS_ADMIN \
     -v $PWD:/project \
-    --name verl \
-    verlai/verl:vllm012.latest sleep infinity
-docker start verl
-docker exec -it verl bash
+    --name jvr_verilog \
+    verlai/verl:vllm012.latest bash
 ```
+
+### Method 2: Manual Installation
+
+If you prefer to set up the environment manually, please ensure your OS is Ubuntu 22.04 or later.
+
+1. Core Frameworks
+- `ms-swift` (3.12.3): Required for Supervised Fine-Tuning (SFT). Please refer to the official SWIFT installation guide.
+- `VERL` (0.8.0.dev0): The reinforcement learning pipeline is built on VERL, developed by ByteDance. Please follow the VERL GitHub repository to build and install it from source.
+2. Hardware Accelerators
+To install transformer-engine, explicitly set the cuDNN paths before pip installation:
+```bash
+SITE_PACKAGES=$(python -c "import site; print(site.getsitepackages()[0])") && echo $SITE_PACKAGES
+CUDNN_PATH=$SITE_PACKAGES/nvidia/cudnn 
+CPLUS_INCLUDE_PATH=$SITE_PACKAGES/nvidia/cudnn/include 
+pip install git+[https://github.com/NVIDIA/TransformerEngine.git@stable](https://github.com/NVIDIA/TransformerEngine.git@stable)
+```
+To install flash_attn from source, you can accelerate the build process by increasing the number of parallel jobs:
+```bash
+MAX_JOBS=64 python -m pip -v install flash-attn --no-build-isolation
+```
+⚠️ Warning: Compiling flash-attn with MAX_JOBS=64 is highly resource-intensive and may consume up to 500GB of RAM. Please scale down MAX_JOBS (e.g., to 8 or 16) depending on available memory.
+3. Troubleshooting: GLIBC Compatibility
+If constrained to Ubuntu 20.04, there might be an error during compilation: a version 'GLIBC_2.32' not found. To resolve this, there's a need to manually upgrade glibc. Please refer to these community solutions: [Flash-Attention Issue](https://github.com/Dao-AILab/flash-attention/issues/1762) or [Modular Issue](https://github.com/modular/modular/issues/3684#issuecomment-2480409734).
 
 ## Acknowledgments
 
