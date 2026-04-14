@@ -83,6 +83,7 @@ MAX_JOBS=64 python -m pip -v install flash-attn --no-build-isolation
 ⚠️ Warning: Compiling flash-attn with MAX_JOBS=64 is highly resource-intensive and may consume up to 500GB of RAM. Please scale down MAX_JOBS (e.g., to 8 or 16) depending on available memory.
 
 3. **Troubleshooting**:
+
 If constrained to Ubuntu 20.04, there might be an error during compilation: a version 'GLIBC_2.32' not found. To resolve this, there's a need to manually upgrade glibc. Please refer to these community solutions: [Flash-Attention Issue](https://github.com/Dao-AILab/flash-attention/issues/1762) or [Modular Issue](https://github.com/modular/modular/issues/3684#issuecomment-2480409734).
 
 ## Acknowledgments
