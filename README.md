@@ -80,7 +80,7 @@ To install `flash_attn` from source, you can accelerate the build process by inc
 ```bash
 MAX_JOBS=64 python -m pip -v install flash-attn --no-build-isolation
 ```
-⚠️ Warning: Compiling flash-attn with MAX_JOBS=64 is highly resource-intensive and may consume up to 500GB of RAM. Please scale down MAX_JOBS (e.g., to 8 or 16) depending on available memory.
+⚠️ Warning: Compiling `flash-attn` with `MAX_JOBS=64` is highly resource-intensive and may consume up to 500GB of RAM. Please scale down MAX_JOBS (e.g., to 8 or 16) depending on available memory.
 
 3. **Troubleshooting**:
 
